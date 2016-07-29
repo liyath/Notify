@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:id="@+id/ScrollView"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/w_backBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Back to Main" />
+        <TextView
+            android:id="@+id/titleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose an Audio:"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+            <Button
+                android:id="@+id/wav1Btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Audio 1" />
+            <Button
+                android:id="@+id/wav2Btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Audio 2" />
+            <Button
+                android:id="@+id/wav3Btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Audio 3" />
+            <Button
+                android:id="@+id/wav4Btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Audio 4" />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/subtitleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="You have three options:"
+            android:textAppearance="?android:attr/textAppearanceMedium" android:visibility="invisible"/>
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+            <Button
+                android:id="@+id/generateBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Generate"
+                android:visibility="invisible" />
+            <Button
+                android:id="@+id/play_orgBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Origin Audio"
+                android:visibility="invisible" />
+            <Button
+                android:id="@+id/play_fftBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FFT Result"
+                android:visibility="invisible" />
+        </LinearLayout>
+        <Button
+            android:id="@+id/dbBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Show DB/HZ Graph" android:visibility="invisible"/>
+        <ImageView
+            android:id="@+id/imv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/generatebutton" android:visibility="invisible"/>
+        <SurfaceView
+            android:id="@+id/orgWave_sufView"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:visibility="invisible" />
+        <SurfaceView
+            android:id="@+id/fftWave_sufView"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:visibility="invisible" />
+    </LinearLayout>
+</ScrollView>
