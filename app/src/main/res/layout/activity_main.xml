@@ -35,7 +35,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:layout_weight="0.25"
+            android:layout_weight="0.49"
             android:onClick="barPressed"
             android:text="Bar" >
         </Button>
@@ -44,7 +44,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:layout_weight="0.25"
+            android:layout_weight="0.90"
             android:onClick="circlePressed"
             android:text="Circle" >
         </Button>
@@ -53,7 +53,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:layout_weight="0.25"
+            android:layout_weight="1.10"
             android:onClick="circleBarPressed"
             android:text="Circle Bar" >
         </Button>
@@ -62,16 +62,15 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:layout_weight="0.25"
+            android:layout_weight="0.98"
             android:onClick="linePressed"
             android:text="Line" >
         </Button>
 
         <Button
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:layout_weight="0.25"
             android:onClick="clearPressed"
             android:text="Clear" >
         </Button>

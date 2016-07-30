@@ -1,6 +1,7 @@
 package de.bht.notify.mediarec;
 
 //import de.bht.notify.mediarec.R;
+
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -215,7 +216,6 @@ public class MainActivity extends Activity {
     public void playPressed(View view) throws IllegalStateException, IOException {
 
         mPlayer = new MediaPlayer();
-        Log.d("StartPlaying", "Ich bin hier");
         try {
             mPlayer.setDataSource(mFileName);
             mPlayer.prepare();

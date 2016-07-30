@@ -3,6 +3,7 @@ package de.bht.notify.mediarec.visualizer;
 /**
  * Created by peachi on 30.07.2016.
  */
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,6 +20,7 @@ import android.graphics.Rect;
 import android.media.MediaPlayer;
 import android.media.audiofx.Visualizer;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import de.bht.notify.mediarec.visualizer.renderer.Renderer;
@@ -41,21 +43,16 @@ public class VisualizerView extends View {
     private Paint mFlashPaint = new Paint();
     private Paint mFadePaint = new Paint();
 
-    public VisualizerView(Context context, AttributeSet attrs, int defStyle)
-    {
+    public VisualizerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs);
         init();
     }
 
-    public VisualizerView(Context context, AttributeSet attrs)
-    {
-
+    public VisualizerView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public VisualizerView(Context context)
-    {
-
+    public VisualizerView(Context context) {
         this(context, null, 0);
     }
 
@@ -72,12 +69,11 @@ public class VisualizerView extends View {
 
     /**
      * Links the visualizer to a player
+     *
      * @param player - MediaPlayer instance to link to
      */
-    public void link(MediaPlayer player)
-    {
-        if(player == null)
-        {
+    public void link(MediaPlayer player) {
+        if (player == null) {
             throw new NullPointerException("Cannot link to null MediaPlayer");
         }
 
@@ -86,48 +82,40 @@ public class VisualizerView extends View {
         mVisualizer.setCaptureSize(Visualizer.getCaptureSizeRange()[1]);
 
         // Pass through Visualizer data to VisualizerView
-        Visualizer.OnDataCaptureListener captureListener = new Visualizer.OnDataCaptureListener()
-        {
+        Visualizer.OnDataCaptureListener captureListener = new Visualizer.OnDataCaptureListener() {
             @Override
             public void onWaveFormDataCapture(Visualizer visualizer, byte[] bytes,
-                                              int samplingRate)
-            {
+                                              int samplingRate) {
                 updateVisualizer(bytes);
             }
 
             @Override
             public void onFftDataCapture(Visualizer visualizer, byte[] bytes,
-                                         int samplingRate)
-            {
+                                         int samplingRate) {
                 updateVisualizerFFT(bytes);
             }
         };
-
+        Log.d("V.getMaxCaptureRate", "" + Visualizer.getMaxCaptureRate());
         mVisualizer.setDataCaptureListener(captureListener,
                 Visualizer.getMaxCaptureRate() / 2, true, true);
 
         // Enabled Visualizer and disable when we're done with the stream
         mVisualizer.setEnabled(true);
-        player.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
-        {
+        player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
-            public void onCompletion(MediaPlayer mediaPlayer)
-            {
+            public void onCompletion(MediaPlayer mediaPlayer) {
                 mVisualizer.setEnabled(false);
             }
         });
     }
 
-    public void addRenderer(Renderer renderer)
-    {
-        if(renderer != null)
-        {
+    public void addRenderer(Renderer renderer) {
+        if (renderer != null) {
             mRenderers.add(renderer);
         }
     }
 
-    public void clearRenderers()
-    {
+    public void clearRenderers() {
         mRenderers.clear();
     }
 
@@ -135,8 +123,7 @@ public class VisualizerView extends View {
      * Call to release the resources used by VisualizerView. Like with the
      * MediaPlayer it is good practice to call this method
      */
-    public void release()
-    {
+    public void release() {
 
         mVisualizer.release();
     }
@@ -145,6 +132,7 @@ public class VisualizerView extends View {
      * Pass data to the visualizer. Typically this will be obtained from the
      * Android Visualizer.OnDataCaptureListener call back. See
      * {@link Visualizer.OnDataCaptureListener#onWaveFormDataCapture }
+     *
      * @param bytes
      */
     public void updateVisualizer(byte[] bytes) {
@@ -156,6 +144,7 @@ public class VisualizerView extends View {
      * Pass FFT data to the visualizer. Typically this will be obtained from the
      * Android Visualizer.OnDataCaptureListener call back. See
      * {@link Visualizer.OnDataCaptureListener#onFftDataCapture }
+     *
      * @param bytes
      */
     public void updateVisualizerFFT(byte[] bytes) {
@@ -185,20 +174,17 @@ public class VisualizerView extends View {
         // Create canvas once we're ready to draw
         mRect.set(0, 0, getWidth(), getHeight());
 
-        if(mCanvasBitmap == null)
-        {
+        if (mCanvasBitmap == null) {
             mCanvasBitmap = Bitmap.createBitmap(canvas.getWidth(), canvas.getHeight(), Config.ARGB_8888);
         }
-        if(mCanvas == null)
-        {
+        if (mCanvas == null) {
             mCanvas = new Canvas(mCanvasBitmap);
         }
 
         if (mBytes != null) {
             // Render all audio renderers
             AudioData audioData = new AudioData(mBytes);
-            for(Renderer r : mRenderers)
-            {
+            for (Renderer r : mRenderers) {
                 r.render(mCanvas, audioData, mRect);
             }
         }
@@ -206,8 +192,7 @@ public class VisualizerView extends View {
         if (mFFTBytes != null) {
             // Render all FFT renderers
             FFTData fftData = new FFTData(mFFTBytes);
-            for(Renderer r : mRenderers)
-            {
+            for (Renderer r : mRenderers) {
                 r.render(mCanvas, fftData, mRect);
             }
         }
@@ -215,8 +200,7 @@ public class VisualizerView extends View {
         // Fade out old contents
         mCanvas.drawPaint(mFadePaint);
 
-        if(mFlash)
-        {
+        if (mFlash) {
             mFlash = false;
             mCanvas.drawPaint(mFlashPaint);
         }
