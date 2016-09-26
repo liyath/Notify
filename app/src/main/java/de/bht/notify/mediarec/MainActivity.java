@@ -1,9 +1,11 @@
 package de.bht.notify.mediarec;
 
 //import de.bht.notify.mediarec.R;
+import android.content.res.AssetFileDescriptor;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Debug;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +24,7 @@ import android.os.Bundle;
  */
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -65,7 +68,7 @@ public class MainActivity extends Activity {
 
     public MainActivity() {
         mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
-        mFileName += "/audiorecordtest.3gp";
+        mFileName = "/audiorecordtest.3gp";
         Log.d("Sag mir deinen Namen!!", mFileName);
     }
 
@@ -89,14 +92,18 @@ public class MainActivity extends Activity {
     }
 
     private void init() {
-        mPlayer = new MediaPlayer();
+        mPlayer = MediaPlayer.create(this, R.raw.sinus);
+        // mPlayer.prepare();
+        mPlayer.start();
+        /*
         try {
-            mPlayer.setDataSource(mFileName);
-            mPlayer.prepare();
-            mPlayer.start();
+
+            //mPlayer.setDataSource(Uri.parse("android.resource:// "+ R.raw.sinus400hz_10db));
+            //mPlayer.setDataSource(ins.toString());
+
         } catch (IOException e) {
             Log.e("LOG_TAG", "prepare() failed");
-        }
+        }*/
         mPlayer.setLooping(true);
         mPlayer.start();
 

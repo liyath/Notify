@@ -6,7 +6,10 @@ package de.bht.notify.mediarec.visualizer.renderer;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.os.Debug;
+import android.util.Log;
 
+import de.bht.notify.mediarec.MainActivity;
 import de.bht.notify.mediarec.visualizer.AudioData;
 import de.bht.notify.mediarec.visualizer.FFTData;
 
@@ -41,14 +44,43 @@ public class BarGraphRenderer extends Renderer
     @Override
     public void onRender(Canvas canvas, FFTData data, Rect rect)
     {
+        double[] mag = new double[data.bytes.length / mDivisions];
         for (int i = 0; i < data.bytes.length / mDivisions; i++) {
+
+
+            byte re = data.bytes[2 * i];
+            byte im = data.bytes[2 * i + 1];
+
+            mag[i] = Math.sqrt((re * re + im * im));
+
+
+            //Log.d("COMPLEX", "RFK " + rfk + "; IFK " + ifk + "; MAGNITUDE " + magnitude + "; DBVALUE " + dbValue);
+        }
+
+        double max_mag = Double.NEGATIVE_INFINITY;
+            int max_ind = -1;
+        for (int i = 0; i < mag.length; i++) {
+            if (mag[i] > max_mag) {
+                max_mag = mag[i];
+                max_ind = i;
+            }
+        }
+
+        double freq = max_ind*200/mDivisions;
+        Log.d("FREQ", ""+freq);
+
+    /*
+        for (int i = 0; i < data.bytes.length / mDivisions; i++) {
+
             mFFTPoints[i * 4] = i * 4 * mDivisions;
             mFFTPoints[i * 4 + 2] = i * 4 * mDivisions;
             byte rfk = data.bytes[mDivisions * i];
             byte ifk = data.bytes[mDivisions * i + 1];
+            ;
             float magnitude = (rfk * rfk + ifk * ifk);
+            Log.d("COMPLEX", "RFK "+rfk + "; IFK " + ifk + "; MAGNITUDE " + magnitude);
             int dbValue = (int) (10 * Math.log10(magnitude));
-
+            Log.d("COMPLEX", "RFK "+rfk + "; IFK " + ifk + "; MAGNITUDE " + magnitude + "; DBVALUE " + dbValue);
             if(mTop)
             {
                 mFFTPoints[i * 4 + 1] = 0;
@@ -61,6 +93,8 @@ public class BarGraphRenderer extends Renderer
             }
         }
 
+
         canvas.drawLines(mFFTPoints, mPaint);
+        */
     }
 }

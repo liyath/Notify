@@ -19,6 +19,7 @@ import android.graphics.Rect;
 import android.media.MediaPlayer;
 import android.media.audiofx.Visualizer;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import de.bht.notify.mediarec.visualizer.renderer.Renderer;
@@ -160,6 +161,7 @@ public class VisualizerView extends View {
      */
     public void updateVisualizerFFT(byte[] bytes) {
         mFFTBytes = bytes;
+        //Log.e("Visualizer", "" + bytes.toString());
         invalidate();
     }
 

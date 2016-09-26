@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.util.Log;
 
 import de.bht.notify.mediarec.visualizer.AudioData;
 import de.bht.notify.mediarec.visualizer.FFTData;
@@ -21,7 +22,7 @@ public class LineRenderer extends Renderer
 
     /**
      * Renders the audio data onto a line. The line flashes on prominent beats
-     * @param canvas
+    // * @param canvas
      * @param paint - Paint to draw lines with
      * @param paint - Paint to draw flash with
      */
@@ -32,7 +33,7 @@ public class LineRenderer extends Renderer
 
     /**
      * Renders the audio data onto a line. The line flashes on prominent beats
-     * @param canvas
+     //* @param canvas
      * @param paint - Paint to draw lines with
      * @param paint - Paint to draw flash with
      * @param cycleColor - If true the color will change on each frame
@@ -50,13 +51,16 @@ public class LineRenderer extends Renderer
     @Override
     public void onRender(Canvas canvas, AudioData data, Rect rect)
     {
+        /*
         if(mCycleColor)
         {
             cycleColor();
         }
+        */
 
         // Calculate points for line
         for (int i = 0; i < data.bytes.length - 1; i++) {
+
             mPoints[i * 4] = rect.width() * i / (data.bytes.length - 1);
             mPoints[i * 4 + 1] =  rect.height() / 2
                     + ((byte) (data.bytes[i] + 128)) * (rect.height() / 3) / 128;
@@ -65,12 +69,13 @@ public class LineRenderer extends Renderer
                     + ((byte) (data.bytes[i + 1] + 128)) * (rect.height() / 3) / 128;
         }
 
+
         // Calc amplitude for this waveform
         float accumulator = 0;
         for (int i = 0; i < data.bytes.length - 1; i++) {
             accumulator += Math.abs(data.bytes[i]);
         }
-
+/*
         float amp = accumulator/(128 * data.bytes.length);
         if(amp > amplitude)
         {
@@ -79,11 +84,11 @@ public class LineRenderer extends Renderer
             canvas.drawLines(mPoints, mFlashPaint);
         }
         else
-        {
+        {*/
             // Amplitude is nothing special, reduce the amplitude
             amplitude *= 0.99;
             canvas.drawLines(mPoints, mPaint);
-        }
+        //}
     }
 
     @Override
